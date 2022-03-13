@@ -10,13 +10,23 @@ use App\Tag;
 use App\Blog_Tag;
 use App\Comment;
 use App\Like;
+use App\Notifications\CommentNotification;
+use App\Notifications\LikeNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class BlogController extends Controller
 {
-    public function showYourBlogs() {
-        $blogs = Auth::user()->blogs;
-        return view('yourblogs', compact('blogs'));
+    public function showCategory(Request $request) {
+        $categoryBlogs = Category::find($request->id)->blogs;
+        $category = Category::find($request->id);
+        return view('category', compact('categoryBlogs', 'category'));
+    }
+
+    public function showTag(Request $request) {
+        $tagBlogs = Tag::find($request->id)->blogs;
+        $tag = Tag::find($request->id);
+        return view('tag', compact('tagBlogs', 'tag'));
     }
 
     public function createBlog() {
@@ -103,6 +113,18 @@ class BlogController extends Controller
             'user_id' => Auth::user()->id           
         ]);
 
+        $user = Blog::find($request->id)->user;
+
+        $offerData = [
+            'name' => Auth::user()->name,
+            'id' => Auth::user()->id,
+            'blogTitle' => Blog::find($request->id)->title,
+            'offerUrl' => url('/view-blog/'.$request->id),
+            'offer_id' => 007
+        ];
+  
+        Notification::send($user, new CommentNotification($offerData));
+
         return back()->with('success', 'Comment posted successfully!');
     }
 
@@ -116,6 +138,18 @@ class BlogController extends Controller
                 'blog_id' => $id,
                 'user_id' => Auth::user()->id
             ]);
+
+            $user = Blog::find($id)->user;
+
+            $offerData = [
+                'id' => Auth::user()->id,
+                'name' => Auth::user()->name,
+                'blogTitle' => Blog::find($id)->title,
+                'offerUrl' => url('/view-blog/'.$id),
+                'offer_id' => 001
+            ];
+
+            Notification::send($user, new LikeNotification($offerData));
         }
     }
     

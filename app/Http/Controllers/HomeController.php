@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Blog;
+use App\Category;
+use App\Tag;
 
 class HomeController extends Controller
 {
@@ -24,15 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $allBlogs = Blog::all();
-        $blogAuthors = [];
-        $blogTags = [];
-
-        foreach ($allBlogs as $blog) {
-            $blogAuthors[] = $blog->user;
-            $blogTags[] = $blog->tags;
-        }
-
-        return view('home', compact('allBlogs', 'blogAuthors', 'blogTags'));
+        $allBlogs = Blog::latest()->paginate(5);
+        $authUser = Auth::user();
+        $categories = Category::all();
+        $tags = Tag::all();
+        
+        return view('home', compact('allBlogs', 'authUser', 'categories', 'tags'));
     }
 }

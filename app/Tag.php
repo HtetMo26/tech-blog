@@ -10,7 +10,7 @@ class Tag extends Model
     protected $fillable = ['tag_name'];
 
     public function blogs() {
-        return $this->belongsToMany(Blog::class);
+        return $this->belongsToMany(Blog::class, 'blogs_tags');
     }
 }
 

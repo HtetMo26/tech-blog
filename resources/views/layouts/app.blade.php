@@ -53,7 +53,37 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <li class="nav-item">
+                                <a class="btn btn-outline-primary" href="{{ route('blog.create') }}" role="button">Create Blog</a>
+                            </li>
+                            <li class="nav-item dropdown ml-2">
+                                @if (Auth::user()->notifications->count()>0)
+                                    <a id="notiDropdown" class="nav-link dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        <i class="fa-solid fa-bell"></i><span class="numberCircle text-white ml-2 small font-weight-bold">{{Auth::user()->notifications->count()}}</span>
+                                    <a/>
+                                @else
+                                    <a id="notiDropdown" class="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        <i class="fa-solid fa-bell"></i>
+                                    <a/>
+                                @endif
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notiDropdown">
+                                    @if (Auth::user()->notifications->count()>0) 
+                                        @foreach(Auth::user()->notifications as $notification)
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="{{$notification->data['offerUrl']}}"> 
+                                                @if($notification->data['offer_id'] == 7)
+                                                    <b>{{$notification->data['name']}}</b> commented on your blog <b>{{$notification->data['blogTitle']}}</b>.
+                                                @else
+                                                    <b>{{$notification->data['name']}}</b> liked your blog <b>{{$notification->data['blogTitle']}}</b>.
+                                                @endif
+                                            </a>
+                                        @endforeach                
+                                    @endif
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown ml-1">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
@@ -68,6 +98,10 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+
+                                    <div class="dropdown-divider"></div>
+                                    
+                                    <a class="dropdown-item" href="{{ route('profile.view', Auth::user()->id) }}">Profile</a>
                                 </div>
                             </li>
                         @endguest

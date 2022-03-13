@@ -6,14 +6,16 @@
             <div class="col-md-9 mb-3">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h2 class="text-center">{{$blogDetails->title}}</h2>
-                        <h5><span class="badge badge-info mb-3">{{$category->category_name}}</span></h5>
+                        <a href="{{route('category.view', $category->id)}}"><h5><span class="badge badge-secondary mb-3">{{$category->category_name}}</span></h5></a>
+                        <h2 class="text-center font-weight-bold mb-4">{{$blogDetails->title}}</h2>
                         <h4 class="like-status float-right" data-at="{{$blogDetails->id}}"><i class="like fa-solid fa-heart {{ $userLiked == true ? 'text-danger' : 'text-secondary' }} mr-2" data-at="{{ $userLiked }}" ></i><span id="count">{{$blogLikes->count()}}</span></h4>
+                        <h5>
                         @foreach($newTags as $tag)
-                            #{{$tag->tag_name}}
+                            <a href="{{route('tag.view', $tag->id)}}"><span class="badge badge-info mr-2"><span class="text-white">#{{$tag->tag_name}}</span></span></a>
                         @endforeach
-                        <img class="blog-detail-img mt-4" src="{{ asset('storage/'.$blogDetails->image) }}" alt="">
-                        <p class="card-text mt-5">{{$blogDetails->body}}</p>
+                        </h5>
+                        <img class="blog-detail-img mt-3" src="{{ asset('storage/'.$blogDetails->image) }}" alt="">
+                        <p class="card-text mt-4">{{$blogDetails->body}}</p>
                         <hr class="mt-4">
                         @include('flash-message')
                         <h4>Comments</h4>
@@ -31,7 +33,7 @@
                                         <p class="card-title font-weight-bold">
                                             @foreach($commentUsers as $commentUser)
                                                 @if($blogComment->user_id == $commentUser->id)
-                                                    {{ $commentUser->name}} @if($commentUser->id == $blogDetails->user_id)<span class="badge badge-info"> Author </span> @endif&nbsp;<span class="text-muted small">&bull;&nbsp;&nbsp;{{ $blogComment->created_at->diffForHumans() }}</span>
+                                                    <a class="card-link text-dark" href="{{route('profile.view', $commentUser->id)}}">{{ $commentUser->name}}</a> @if($commentUser->id == $blogDetails->user_id)<span class="badge badge-info"> Author </span> @endif&nbsp;<span class="text-muted small">&bull;&nbsp;&nbsp;{{ $blogComment->created_at->diffForHumans() }}</span>
                                                     @break                                                 
                                                 @endif
                                             @endforeach
@@ -46,9 +48,14 @@
             </div>
             <div class="col-md-3">
                 <div class="card shadow">
+                    <div class="card-header bg-white text-center">
+                        <h5 class="mb-0 font-weight-bold"><i class="fa-solid fa-feather-pointed mr-2"></i>Author</h5>
+                    </div>
                     <div class="card-body">
-                        <h4 class="text-center">Author</h4>
-                        <p><span class="font-weight-bold mr-3">Name</span>{{$blogAuthor->name}}<br><span class="font-weight-bold mr-3">Email</span>{{$blogAuthor->email}}</p>
+                        <h6 class="text-muted mb-0">NAME</h6>
+                        <h6 class="mb-3">{{$blogAuthor->name}}</h6>
+                        <h6 class="text-muted mb-0">EMAIL</h6>
+                        <h6 class="mb-0">{{$blogAuthor->email}}</h6>
                     </div>
                 </div>
             </div>
@@ -58,7 +65,6 @@
         $(document).ready(function () {
             $('.like-status').click(function () {
                 let like = parseInt($('#count').text());
-                console.log(like+1);
                 if ($('.like').hasClass('text-secondary')) {
                     $('.like').removeClass('text-secondary');
                     $('.like').addClass('text-danger');

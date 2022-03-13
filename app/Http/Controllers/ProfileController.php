@@ -13,10 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function showOwnProfile() {
-        $userDetails = User::where('id', Auth::user()->id)->first();
-        $yourBlogs = Auth::user()->blogs;
+    public function showProfile(Request $request) {
+        $userDetails = User::find($request->id);
 
-        return view('yourprofile', compact('userDetails','yourBlogs'));
+        return view('profile', compact('userDetails'));
     }
 }

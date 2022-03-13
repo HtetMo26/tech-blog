@@ -18,9 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/yourblogs', 'BlogController@showYourBlogs')->middleware('auth');
+Route::get('/view-category/{id}', 'BlogController@showCategory')->name('category.view')->middleware('auth');
 
-Route::get('/create-blog', 'BlogController@createBlog')->middleware('auth');
+Route::get('/view-tag/{id}', 'BlogController@showTag')->name('tag.view')->middleware('auth');
+
+Route::get('/create-blog', 'BlogController@createBlog')->name('blog.create')->middleware('auth');
 
 Route::post('/store-blog', 'BlogController@storeBlog')->name('blog.store');
 
@@ -28,7 +30,7 @@ Route::get('/view-blog/{id}', 'BlogController@showBlogDetails')->name('blog.view
 
 Route::post('/store-comment/{id}', 'BlogController@storeComment')->name('comment.store');
 
-Route::get('/view-ownprofile', 'ProfileController@showOwnProfile')->name('ownprofile.view');
+Route::get('/view-profile/{id}', 'ProfileController@showProfile')->name('profile.view');
 
 Route::post('/like-blog', 'BlogController@storeLike')->name('blog.like');
 
