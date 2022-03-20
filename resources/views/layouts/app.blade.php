@@ -59,7 +59,7 @@
                             <li class="nav-item dropdown ml-2">
                                 @if (Auth::user()->notifications->count()>0)
                                     <a id="notiDropdown" class="nav-link dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <i class="fa-solid fa-bell"></i><span class="numberCircle text-white ml-2 small font-weight-bold">{{Auth::user()->notifications->count()}}</span>
+                                        <i class="fa-solid fa-bell"></i>@if (Auth::user()->unreadNotifications->count()>0)<span class="numberCircle text-white ml-2 small font-weight-bold">{{Auth::user()->unreadNotifications->count()}}</span>@endif
                                     <a/>
                                 @else
                                     <a id="notiDropdown" class="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -71,11 +71,14 @@
                                     @if (Auth::user()->notifications->count()>0) 
                                         @foreach(Auth::user()->notifications as $notification)
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{{$notification->data['offerUrl']}}"> 
-                                                @if($notification->data['offer_id'] == 7)
+                                            <a class="noti-div dropdown-item {{ $notification->read()? 'text-muted' : '' }}" href="{{$notification->data['offerUrl']}}" data-at="{{$notification->id}}"> 
+                                                @if($notification->type == 'App\Notifications\CommentNotification')
                                                     <b>{{$notification->data['name']}}</b> commented on your blog <b>{{$notification->data['blogTitle']}}</b>.
                                                 @else
                                                     <b>{{$notification->data['name']}}</b> liked your blog <b>{{$notification->data['blogTitle']}}</b>.
+                                                @endif
+                                                @if ($notification->unread())
+                                                    <span class="blue-dot"></span>
                                                 @endif
                                             </a>
                                         @endforeach                
@@ -114,5 +117,27 @@
             @yield('content')
         </main>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('.noti-div').click(function () {
+                let id = $(this).attr('data-at');
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{route('comment.read')}}",
+                    data: {'notiid': id},
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function() {
+                        console.log('success');                
+                    },
+                    error: function() {
+                        alert("failure From php side!!!");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

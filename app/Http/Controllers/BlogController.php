@@ -14,6 +14,7 @@ use App\Notifications\CommentNotification;
 use App\Notifications\LikeNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
+use Laravel\Ui\Presets\React;
 
 class BlogController extends Controller
 {
@@ -119,7 +120,7 @@ class BlogController extends Controller
             'name' => Auth::user()->name,
             'id' => Auth::user()->id,
             'blogTitle' => Blog::find($request->id)->title,
-            'offerUrl' => url('/view-blog/'.$request->id),
+            'offerUrl' => url('/view-blog/'.$request->id.'#comment'),
             'offer_id' => 007
         ];
   
@@ -150,6 +151,16 @@ class BlogController extends Controller
             ];
 
             Notification::send($user, new LikeNotification($offerData));
+        }
+    }
+
+    public function markComment(Request $request) {
+        $noti_id = $request->notiid;
+
+        $notification = Auth::user()->notifications->where('id', $noti_id)->first();
+
+        if ($notification) {
+            $notification->markAsRead();
         }
     }
     

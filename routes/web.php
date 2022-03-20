@@ -34,6 +34,14 @@ Route::get('/view-profile/{id}', 'ProfileController@showProfile')->name('profile
 
 Route::post('/like-blog', 'BlogController@storeLike')->name('blog.like');
 
+// Route::get('/send-mail', 'MailController@sendMail');
+
+Route::post('/verify-email/{id}', 'VerificationController@verifyMail')->name('email.verify');
+
+Route::post('/register/custom-register', 'Auth\AuthController@register')->name('custom.register');
+
+Route::post('/mark-as-read', 'BlogController@markComment')->name('comment.read');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

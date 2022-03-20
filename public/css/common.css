@@ -18,3 +18,12 @@
     background: rgb(223, 41, 41); 
     text-align: center;
   }
+
+  .blue-dot {
+      border-radius: 50%;
+      height: 9px;
+      width: 9px;
+      display: inline-block;
+      margin-left: 5px;
+      background: rgb(44, 95, 207);
+  }

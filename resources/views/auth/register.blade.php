@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('custom.register') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -43,7 +43,11 @@
                             <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
 
                             <div class="col-md-6">
-                                <input id="gender" type="text" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" required autocomplete="gender">
+                                <select id="gender" class="form-select @error('gender') is-invalid @enderror" name="gender" required>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="not_say">Rather not say</option>
+                                </select>
 
                                 @error('gender')
                                     <span class="invalid-feedback" role="alert">
@@ -57,7 +61,7 @@
                             <label for="age" class="col-md-4 col-form-label text-md-right">{{ __('Age') }}</label>
 
                             <div class="col-md-6">
-                                <input id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age') }}" required autocomplete="age">
+                                <input id="age" type="number" min="1" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age') }}" required autocomplete="age">
 
                                 @error('age')
                                     <span class="invalid-feedback" role="alert">

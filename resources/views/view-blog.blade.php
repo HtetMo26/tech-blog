@@ -26,7 +26,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary">Post</button>
                         </form>
-                        <div class="comment-div mt-4 ">
+                        <div class="comment-div mt-4 " id="comment">
                             @foreach($blogComments as $blogComment)
                                 <div class="card mb-4">
                                     <div class="card-body">
