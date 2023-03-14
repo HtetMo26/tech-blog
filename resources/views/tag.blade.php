@@ -3,10 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <h4 class="text-center">#{{ $tag->tag_name }}</h4>
                 @foreach($tagBlogs as $blog)
-                <div class="card-div">          
+                <div class="card-div">
                     <div class="card mx-auto shadow">
                         <div class="card-body">
                             <p class="card-title font-weight-bold">
@@ -21,7 +21,7 @@
                                 @endforeach
                             </p>
                         </div>
-                    </div>          
+                    </div>
                 </div>
                 @endforeach
             </div>

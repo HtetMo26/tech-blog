@@ -34,7 +34,7 @@
                                             @foreach($commentUsers as $commentUser)
                                                 @if($blogComment->user_id == $commentUser->id)
                                                     <a class="card-link text-dark" href="{{route('profile.view', $commentUser->id)}}">{{ $commentUser->name}}</a> @if($commentUser->id == $blogDetails->user_id)<span class="badge badge-info"> Author </span> @endif&nbsp;<span class="text-muted small">&bull;&nbsp;&nbsp;{{ $blogComment->created_at->diffForHumans() }}</span>
-                                                    @break                                                 
+                                                    @break
                                                 @endif
                                             @endforeach
                                         </p>
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card shadow">
+                <div class="card shadow mb-4">
                     <div class="card-header bg-white text-center">
                         <h5 class="mb-0 font-weight-bold"><i class="fa-solid fa-feather-pointed mr-2"></i>Author</h5>
                     </div>
@@ -56,6 +56,20 @@
                         <h6 class="mb-3">{{$blogAuthor->name}}</h6>
                         <h6 class="text-muted mb-0">EMAIL</h6>
                         <h6 class="mb-0">{{$blogAuthor->email}}</h6>
+                    </div>
+                </div>
+                <div class="card shadow">
+                    <div class="card-header bg-white text-center">
+                        <h5 class="mb-0 font-weight-bold">More from <a href="{{route('profile.view', $blogAuthor->id)}}" class="card-link">{{$blogAuthor->name}}</h5></a>
+                    </div>
+                    <div class="card-body">
+                        @foreach ($blogAuthor->blogs->take(4) as $blog )
+                            <a href="{{route('blog.view', $blog->id)}}" class="card-link text-dark"><h6>{{$blog->title}}</h6></a>
+                            @foreach ($blog->tags as $tag )
+                                <a href="{{route('tag.view', $tag->id)}}"><span class="text-muted mr-2">#{{$tag->tag_name}}</span></a>
+                            @endforeach
+                            <hr>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -88,7 +102,7 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 success: function() {
-                    console.log('success');                
+                    console.log('success');
                 },
                 error: function() {
                     alert("failure From php side!!!");

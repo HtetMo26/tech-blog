@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="card shadow mb-4">
                     <div class="card-header bg-primary text-white text-center">Profile details</div>
                     <div class="card-body">
@@ -14,9 +14,9 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <h5 class="mb-4 text-center">Blogs posted</h5>
                 @foreach($userDetails->blogs as $blog)
                     <div class="card shadow mb-4">

@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <h4 class="text-center">{{ $category->category_name }}</h4>
                 @foreach($categoryBlogs as $blog)
-                <div class="card-div">          
+                <div class="card-div">
                     <div class="card mx-auto shadow">
                         <div class="card-body">
                             <p class="card-title font-weight-bold">
@@ -21,7 +21,7 @@
                                 @endforeach
                             </p>
                         </div>
-                    </div>          
+                    </div>
                 </div>
                 @endforeach
             </div>

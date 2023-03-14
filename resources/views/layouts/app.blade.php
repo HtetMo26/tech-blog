@@ -27,7 +27,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
+                    <i class="fa-solid fa-laptop-code mr-2"></i>
                     Mo's Tech Blog
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -68,10 +69,10 @@
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notiDropdown">
-                                    @if (Auth::user()->notifications->count()>0) 
+                                    @if (Auth::user()->notifications->count()>0)
                                         @foreach(Auth::user()->notifications as $notification)
                                             <div class="dropdown-divider"></div>
-                                            <a class="noti-div dropdown-item {{ $notification->read()? 'text-muted' : '' }}" href="{{$notification->data['offerUrl']}}" data-at="{{$notification->id}}"> 
+                                            <a class="noti-div dropdown-item {{ $notification->read()? 'text-muted' : '' }}" href="{{$notification->data['offerUrl']}}" data-at="{{$notification->id}}">
                                                 @if($notification->type == 'App\Notifications\CommentNotification')
                                                     <b>{{$notification->data['name']}}</b> commented on your blog <b>{{$notification->data['blogTitle']}}</b>.
                                                 @else
@@ -81,7 +82,7 @@
                                                     <span class="blue-dot"></span>
                                                 @endif
                                             </a>
-                                        @endforeach                
+                                        @endforeach
                                     @endif
                                 </div>
                             </li>
@@ -103,7 +104,7 @@
                                     </form>
 
                                     <div class="dropdown-divider"></div>
-                                    
+
                                     <a class="dropdown-item" href="{{ route('profile.view', Auth::user()->id) }}">Profile</a>
                                 </div>
                             </li>
@@ -130,7 +131,7 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     success: function() {
-                        console.log('success');                
+                        console.log('success');
                     },
                     error: function() {
                         alert("failure From php side!!!");

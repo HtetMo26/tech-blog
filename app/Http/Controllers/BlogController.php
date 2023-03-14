@@ -100,7 +100,7 @@ class BlogController extends Controller
         $blogAuthor = $blogDetails->user;
         $category = $blogDetails->category;
 
-        return view('view-blog', compact('blogDetails', 'userDetails', 'newTags', 'blogComments', 'commentUsers', 'blogLikes', 'userLiked', 'blogAuthor', 'category'));    
+        return view('view-blog', compact('blogDetails', 'userDetails', 'newTags', 'blogComments', 'commentUsers', 'blogLikes', 'userLiked', 'blogAuthor', 'category'));
     }
 
     public function storeComment(Request $request) {
@@ -111,7 +111,7 @@ class BlogController extends Controller
         Comment::create([
             'comment' => $request->comment,
             'blog_id' => $request->id,
-            'user_id' => Auth::user()->id           
+            'user_id' => Auth::user()->id
         ]);
 
         $user = Blog::find($request->id)->user;
@@ -123,7 +123,7 @@ class BlogController extends Controller
             'offerUrl' => url('/view-blog/'.$request->id.'#comment'),
             'offer_id' => 007
         ];
-  
+
         Notification::send($user, new CommentNotification($offerData));
 
         return back()->with('success', 'Comment posted successfully!');
@@ -163,7 +163,7 @@ class BlogController extends Controller
             $notification->markAsRead();
         }
     }
-    
+
 }
 
 

@@ -6,13 +6,16 @@
 
         <title>Laravel</title>
 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js" crossorigin="anonymous"></script>
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
+                background-color: #dcd7d7;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
@@ -79,12 +82,14 @@
                 </div>
             @endif
 
-            <div class="content">
+            <div class="content bg-info rounded p-5 text-white">
+                <h1><i class="fa-solid fa-laptop-code"></i></h1>
                 <div class="title m-b-md">
                     Mo's Tech Blog
                 </div>
                 <div class="">
-                    <h2>A site for Computer Science and Tech enthusiasts</h2>
+                    <h2>A site for Computer Science and Tech enthusiasts</h2><br>
+                    <a href="{{ url('/home') }}"><button type="button" class="btn btn-secondary">Start blogging</button></a>
                 </div>
             </div>
         </div>
