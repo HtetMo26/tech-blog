@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\RouteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,24 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::get('apiTesting', function() {
+//     $data = [
+//         'message' => 'this is api testing message'
+//     ];
+//     return response()->json($data, 200);
+// });
+
+Route::get('blogs', 'API\RouteController@blogList');
+Route::get('categories', 'API\RouteController@categoryList');
+Route::get('users', 'API\RouteController@userList');
+
+/**
+ *
+ *
+ * blog list
+ *
+ * localhost:8000/api/blogs/list (GET)
+ *
+ *
+ */

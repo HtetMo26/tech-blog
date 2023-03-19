@@ -40,10 +40,10 @@
                             </label>
                         </div>
                         @endforeach
-                    </div>                   
+                    </div>
                     <button type="submit" class="btn btn-primary float-right">Save</button>
                 </form>
-            </div>         
-        </div>      
+            </div>
+        </div>
     </div>
 @endsection
