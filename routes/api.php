@@ -29,13 +29,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('blogs', 'API\RouteController@blogList');
 Route::get('categories', 'API\RouteController@categoryList');
 Route::get('users', 'API\RouteController@userList');
+Route::get('tags', 'API\RouteController@tagList');
+
+Route::post('create/category', 'API\RouteController@createCategory');
+Route::post('create/tag', 'API\RouteController@createTag');
+Route::post('category/delete', 'API\RouteController@deleteCategory');
 
 /**
  *
  *
  * blog list
  *
- * localhost:8000/api/blogs/list (GET)
+ * localhost:8000/api/blogs (GET)
  *
  *
+ * create category
+ *
+ * http://localhost:8000/api/create/category (POST)
  */
