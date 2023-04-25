@@ -74,8 +74,48 @@ class RouteController extends Controller
         return response()->json($response, 200);
     }
 
-    public function deleteCategory (Request $request){
-        Category::where('id', $request->id)->delete();
-        return response()->json(['message' => 'Delete success'], 200);
+    public function deleteCategory ($id){
+        $data = Category::where('id', $id)->first();
+
+        if(isset($data)) {
+            Category::where('id', $id)->delete();
+            return response()->json(['status' => true, 'message' => 'deleteSuccess'], 200);
+        }
+
+        return response()->json(['status' => false, 'message' => 'There is no category...'], 200);
+
+    }
+
+    public function categoryDetails ($id) {
+        $data = Category::where('id', $id)->first();
+
+        if(isset($data)) {
+            return response()->json(['status' => true, 'category' => $data], 200);
+        }
+
+        return response()->json(['status' => false, 'category' => 'There is no category...'], 200);
+    }
+
+    public function categoryUpdate (Request $request) {
+        $id = $request->id;
+
+        $dbSource = Category::where('id', $id)->first();
+
+        if(isset($dbSource)) {
+            $data = $this->getCategoryData($request);
+            Category::where('id', $id)->update($data);
+            $response = Category::where('id', $id)->first();
+            return response()->json(['status' => true, 'message' => 'Category update success', 'category' => $response], 200);
+        }
+
+        return response()->json(['status' => false, 'message' => 'There is no category to update'], 500);
+
+    }
+
+    private function getCategoryData($request) {
+        return [
+            'category_name' => $request->category_name,
+            'updated_at' => Carbon::now()
+        ];
     }
 }

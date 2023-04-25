@@ -33,7 +33,11 @@ Route::get('tags', 'API\RouteController@tagList');
 
 Route::post('create/category', 'API\RouteController@createCategory');
 Route::post('create/tag', 'API\RouteController@createTag');
-Route::post('category/delete', 'API\RouteController@deleteCategory');
+Route::get('category/delete/{id}', 'API\RouteController@deleteCategory');
+
+Route::get('category/details/{id}', 'API\RouteController@categoryDetails');
+
+Route::post('category/update', 'API\RouteController@categoryUpdate');
 
 /**
  *
